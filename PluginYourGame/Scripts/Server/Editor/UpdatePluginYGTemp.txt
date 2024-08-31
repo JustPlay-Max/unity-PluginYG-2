@@ -1,0 +1,78 @@
+#if UNITY_EDITOR
+using System.IO;
+using System.Net.Http;
+using UnityEditor;
+using UnityEngine;
+
+[InitializeOnLoad]
+public class UpdatePluginYGTemp
+{
+    public static string EXAMPLE_SCENES = string.Empty;
+
+    static UpdatePluginYGTemp() => InitializeOnLoad();
+    private static void InitializeOnLoad()
+    {
+        EditorApplication.delayCall += () =>
+        {
+            ImportPackage();
+        };
+    }
+
+    private static async void ImportPackage()
+    {
+        try
+        {
+            string downloadPath = $"{Application.dataPath}/PlyginYG2_tempYG.unitypackage";
+
+            using (HttpClient client = new HttpClient())
+            {
+                DeletePluginYG();
+
+                HttpResponseMessage response = await client.GetAsync("DOWNLOAD_URL_KEY");
+                response.EnsureSuccessStatusCode();
+
+                byte[] packageBytes = await response.Content.ReadAsByteArrayAsync();
+                File.WriteAllBytes(downloadPath, packageBytes);
+
+                AssetDatabase.ImportPackage(downloadPath, true);
+                File.Delete(downloadPath);
+            }
+        }
+        catch (System.Exception ex)
+        {
+            Debug.LogError(ex);
+        }
+        finally
+        {
+            if (EXAMPLE_SCENES != string.Empty)
+            {
+                string directory = $"{Application.dataPath}/PATH_YG2/Example/Resources";
+                Directory.CreateDirectory(directory);
+                File.WriteAllText($"{directory}/DemoSceneNames.txt", EXAMPLE_SCENES);
+            }
+
+            File.Delete($"{Application.dataPath}/UpdatePluginYGTemp.cs");
+        }
+    }
+
+    public static void DeletePluginYG()
+    {
+        SessionState.SetBool("PluginYG_LoadServerComplete", false);
+
+        string startPath = $"{Application.dataPath}/PATH_YG2";
+        DeleteDirectory($"{startPath}/Editor");
+        DeleteDirectory($"{startPath}/Example");
+        DeleteDirectory($"{startPath}/Scripts");
+        AssetDatabase.Refresh();
+    }
+
+    public static void DeleteDirectory(string folderDelete)
+    {
+        if (!Directory.Exists(folderDelete))
+            return;
+
+        FileUtil.DeleteFileOrDirectory(folderDelete);
+        FileUtil.DeleteFileOrDirectory(folderDelete + ".meta");
+    }
+}
+#endif
