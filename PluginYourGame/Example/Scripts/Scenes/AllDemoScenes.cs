@@ -77,7 +77,10 @@ namespace YG.Example.DemoScene
                 childCount = rootPartialsGrid.childCount;
 
                 for (int i = childCount - 1; i >= 0; i--)
-                    Destroy(rootPartialsGrid.GetChild(i).gameObject);
+                {
+                    if (rootPartialsGrid.GetChild(i).gameObject.name != "BasicAPI")
+                        Destroy(rootPartialsGrid.GetChild(i).gameObject);
+                }
             }
         }
 

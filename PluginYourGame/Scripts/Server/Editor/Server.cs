@@ -12,7 +12,7 @@ namespace YG.EditorScr
     {
         public const string LOAD_COMPLETE_KEY = "PluginYG_LoadServerComplete";
         private const string URL_KEY = "PluginYG_URLCloudInfo";
-        private const string STANDART_URL = "https://justplaygames.ru/public/pluginYG2/info.json";
+        private const string STANDART_URL = "https://max-games.ru/public/pluginYG2/info.json";
         public static bool loadComplete
         {
             get { return SessionState.GetBool(LOAD_COMPLETE_KEY, false); }

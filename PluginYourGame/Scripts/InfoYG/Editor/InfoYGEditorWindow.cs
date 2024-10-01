@@ -58,7 +58,7 @@ namespace YG.EditorScr
         {
             versionUpdates = VersionUpdatesLabel();
 
-            string iconPluginPath = $"{InfoYG.PATCH_ASSETS_YG2}/Scripts/Editor/Icons/IconPluginYG2.png";
+            string iconPluginPath = $"{InfoYG.PATCH_ASSETS_YG2}/Scripts/EditorScr/Editor/Icons/IconPluginYG2.png";
             iconPluginYG2 = AssetDatabase.LoadAssetAtPath<Texture2D>(iconPluginPath);
 
             string iconSettingsPath = $"{InfoYG.PATCH_ASSETS_YG2}/Scripts/Editor/Icons/Settings.png";
@@ -315,12 +315,13 @@ namespace YG.EditorScr
                 }
                 else
                 {
+                    if (scr.basicSettings.autoApplySettings)
+                        scr.basicSettings.platform.ApplyProjectSettings();
+
                     DefineSymbols.RemoveDefine(lastPlatform);
                     DefineSymbols.AddDefine(currentPlatform);
 
-                    scr.basicSettings.platform.SelectPlatform();
-                    if (scr.basicSettings.autoApplySettings)
-                        scr.basicSettings.platform.ApplyProjectSettings();
+                    PlatformSettings.SelectPlatform();
                 }
                 AssetDatabase.Refresh();
             }
@@ -442,7 +443,7 @@ namespace YG.EditorScr
             int versionUpdates = 0;
             List<string> modulesStr = new List<string>
             {
-                $"PluginYG2 {InfoYG.VERSION_YG2}"
+                $"PluginYG2 v{InfoYG.VERSION_YG2}"
             };
 
             string[] platfomFolders = Directory.GetDirectories(InfoYG.PATCH_PC_PLATFORMS);
@@ -475,7 +476,7 @@ namespace YG.EditorScr
                 string name = modulesStr[i];
                 string version = "0";
 
-                int spaceIndex = modulesStr[i].IndexOf(' ');
+                int spaceIndex = modulesStr[i].IndexOf(" ");
                 if (spaceIndex > -1)
                 {
                     name = modulesStr[i].Remove(spaceIndex);

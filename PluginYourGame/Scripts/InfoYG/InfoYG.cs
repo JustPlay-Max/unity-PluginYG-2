@@ -14,7 +14,7 @@ namespace YG
         public class Basic
         {
 #if UNITY_EDITOR
-            [HeaderYG2(Langs.platform)]
+            [HeaderYG(Langs.platform)]
 #endif
             public PlatformSettings platform;
 #if UNITY_EDITOR
@@ -23,7 +23,7 @@ namespace YG
             public bool autoApplySettings = true;
 
 #if UNITY_EDITOR
-            [HeaderYG2(Langs.other)]
+            [HeaderYG(Langs.other)]
             [Tooltip(Langs.t_autoPauseGame)]
 #endif
             public bool autoPauseGame = true;
@@ -40,13 +40,25 @@ namespace YG
             [Tooltip(Langs.t_archivingBuild)]
 #endif
             public bool archivingBuild = true;
+#if UNITY_EDITOR
+            [Tooltip(Langs.t_syncInitSDK)]
+#endif
+            public bool syncInitSDK;
+#if UNITY_EDITOR
+            [NestedYG(nameof(syncInitSDK)), Tooltip(Langs.t_loadSceneIfSDKLate)]
+#endif
+            public bool loadSceneIfSDKLate;
+#if UNITY_EDITOR
+            [NestedYG(nameof(loadSceneIfSDKLate), nameof(syncInitSDK)), Min(0)]
+#endif
+            public int loadSceneIndex;
 
 #if YandexGamePlatform
 #if UNITY_EDITOR
-            [HeaderYG2("YandexGame")]
+            [HeaderYG("YandexGame")]
             [Tooltip(Langs.t_pixelRatio)]
             public bool pixelRatioEnable;
-            [ShowIfYG2(nameof(pixelRatioEnable)), Min(0)]
+            [NestedYG(nameof(pixelRatioEnable)), Min(0)]
             public float pixelRatioValue = 1.3f;
 
             public enum LogoImgFormat

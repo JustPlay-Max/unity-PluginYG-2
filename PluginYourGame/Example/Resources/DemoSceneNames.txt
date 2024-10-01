@@ -1,0 +1,13 @@
+ExampleYG2
+Authorization
+Envir
+Flags
+Fullscreen
+InterstitialAdv
+Leaderboards
+Localization
+Payments
+PlayerStats
+RewardedAdv
+Storage
+TV_yg

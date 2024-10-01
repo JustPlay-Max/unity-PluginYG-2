@@ -1,6 +1,8 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Runtime.InteropServices;
-using System;
+using UnityEngine.SceneManagement;
+using YG.Insides;
 
 namespace YG
 {
@@ -10,9 +12,12 @@ namespace YG
         public static InfoYG infoYG { get { return InfoYG.Inst(); } }
 
         public static IPlatformsYG2 iPlatform;
-        public static YG2Instance instance;
+        public static YGSendMessage sendMessage;
+        public static OptionalPlatform optionalPlatform = new OptionalPlatform();
         public static bool SDKEnabled { get => _SDKEnabled; }
         private static bool _SDKEnabled;
+
+        private static bool syncInitSDKComplete, awakePassed;
 
         public static Action onGetSDKData;
         public static Action<bool> onPauseGame;
@@ -37,7 +42,7 @@ namespace YG
 #if UNITY_EDITOR
             // Reset static for ESC
             _SDKEnabled = false;
-            instance = null;
+            sendMessage = null;
             nowInterAdv = false;
             nowRewardAdv = false;
             onGetSDKData = null;
@@ -50,25 +55,82 @@ namespace YG
 
             GameObject YGObj = new GameObject() { name = "YG2Instance" };
             MonoBehaviour.DontDestroyOnLoad(YGObj);
-            instance = YGObj.AddComponent<YG2Instance>();
+            sendMessage = YGObj.AddComponent<YGSendMessage>();
 
             iPlatform.InitAwake();
+            awakePassed = true;
 
-            CallInitYG_0();
-            CallInitYG_1();
-            CallInitYG_2();
-            CallInitYG();
+            if (!infoYG.basicSettings.syncInitSDK || syncInitSDKComplete)
+            {
+                AwakeInit();
+            }
         }
 
-        public static void Start()
+        private static void AwakeInit()
         {
-            if (!_SDKEnabled)
+            CallAction.CallIByAttribute(typeof(InitYG_0Attribute), typeof(YG2));
+            CallAction.CallIByAttribute(typeof(InitYG_1Attribute), typeof(YG2));
+            CallAction.CallIByAttribute(typeof(InitYG_2Attribute), typeof(YG2));
+            CallAction.CallIByAttribute(typeof(InitYGAttribute), typeof(YG2));
+        }
+
+        public static void StartInit()
+        {
+            if (!_SDKEnabled && (!infoYG.basicSettings.syncInitSDK || syncInitSDKComplete))
             {
                 iPlatform.InitStart();
-                CallStartYG();
+                CallAction.CallIByAttribute(typeof(StartYGAttribute), typeof(YG2));
                 _SDKEnabled = true;
                 GetDataInvoke();
                 iPlatform.InitComplete();
+#if !UNITY_EDITOR
+                Message("Init Game Success");
+#endif
+            }
+        }
+
+        public static void SyncInitialization()
+        {
+            if (infoYG.basicSettings.syncInitSDK)
+            {
+                syncInitSDKComplete = true;
+
+                if (!_SDKEnabled)
+                {
+                    if (awakePassed)
+                    {
+                        AwakeInit();
+                    }
+                    else
+                    {
+                        LoadNextScene();
+                        return;
+                    }
+
+                    if (infoYG.basicSettings.loadSceneIfSDKLate)
+                    {
+                        SceneManager.sceneLoaded += LoadLastScene;
+                        SceneManager.LoadScene(infoYG.basicSettings.loadSceneIndex);
+
+                        void LoadLastScene(Scene scene, LoadSceneMode mode)
+                        {
+                            StartInit();
+                            SceneManager.sceneLoaded -= LoadLastScene;
+                        }
+                    }
+                    else StartInit();
+                }
+                else LoadNextScene();
+            }
+            else LoadNextScene();
+
+            void LoadNextScene()
+            {
+                if (infoYG.basicSettings.loadSceneIfSDKLate)
+                {
+                    if (infoYG.basicSettings.loadSceneIndex != 0)
+                        SceneManager.LoadScene(infoYG.basicSettings.loadSceneIndex);
+                }
             }
         }
 
@@ -131,5 +193,20 @@ namespace YG
 
         [DllImport("__Internal")]
         private static extern void LogStyledMessage(string message, string style);
+
+        [AttributeUsage(AttributeTargets.Method)]
+        private class InitYG_0Attribute : Attribute { }
+
+        [AttributeUsage(AttributeTargets.Method)]
+        private class InitYG_1Attribute : Attribute { }
+
+        [AttributeUsage(AttributeTargets.Method)]
+        private class InitYG_2Attribute : Attribute { }
+
+        [AttributeUsage(AttributeTargets.Method)]
+        private class InitYGAttribute : Attribute { }
+
+        [AttributeUsage(AttributeTargets.Method)]
+        private class StartYGAttribute : Attribute { }
     }
 }

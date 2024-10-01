@@ -32,6 +32,8 @@ namespace YG.EditorScr
 
         public static void AddScenesToBuildSettings()
         {
+            RemoveScenesFromBuildSettings();
+
             if (!Directory.Exists($"{InfoYG.PATCH_PC_YG2}/Example"))
             {
 #if RU_YG2

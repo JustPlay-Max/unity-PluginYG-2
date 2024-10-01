@@ -1,5 +1,10 @@
 mergeInto(LibraryManager.library,
 {
+	IsInitSDK_js: function ()
+	{
+		return initYSDK ? 1 : 0;
+	},
+	
 	InitGame_js: function ()
 	{
 		InitGame();

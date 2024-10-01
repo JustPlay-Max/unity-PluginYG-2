@@ -11,7 +11,7 @@ namespace YG
     public class ImageLoadYG : MonoBehaviour
     {
         public bool startLoad;
-        [ShowIfYG2("startLoad")]
+        [NestedYG("startLoad")]
         public string urlImage;
 
         public RawImage rawImage;

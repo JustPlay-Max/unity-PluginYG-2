@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
+using YG.Insides;
 
 namespace YG
 {
@@ -92,10 +93,6 @@ namespace YG
             YG2.onRewardAdv += OnRewardAdv;
             YG2.onErrorRewardedAdv += OnErrorRewardedAdv;
 #endif
-#if Authorization
-            YG2.onAuthTrue += OnAuthTrue;
-            YG2.onAuthFalse += OnAuthFalse;
-#endif
 #if Payments
             YG2.onPurchaseSuccess += OnPurchaseSuccess;
             YG2.onPurchaseFailed += OnPurchaseFailed;
@@ -124,10 +121,7 @@ namespace YG
             YG2.onRewardAdv -= OnRewardAdv;
             YG2.onErrorRewardedAdv -= OnErrorRewardedAdv;
 #endif
-#if Authorization
-            YG2.onAuthTrue -= OnAuthTrue;
-            YG2.onAuthFalse -= OnAuthFalse;
-#endif
+
 #if Payments
             YG2.onPurchaseSuccess -= OnPurchaseSuccess;
             YG2.onPurchaseFailed -= OnPurchaseFailed;
@@ -144,8 +138,18 @@ namespace YG
         public void _GameReadyAPI() => YG2.GameReadyAPI();
         public void _GameplayStart() => YG2.GameplayStart();
         public void _GameplayStop() => YG2.GameplayStop();
+        public void _HappyTime() => YG2.optionalPlatform.HappyTime();
 
-        private void OnGetSDKData() => Execute(EventYG2Type.GetSDKData);
+        private void OnGetSDKData()
+        {
+            Execute(EventYG2Type.GetSDKData);
+#if Authorization
+            if (YG2.player.auth)
+                Execute(EventYG2Type.AuthTrue);
+            else
+                Execute(EventYG2Type.AuthFalse);
+#endif
+        }
         private void OnPauseGame(bool pause)
         {
             if (pause) Execute(EventYG2Type.PauseStopGame);
@@ -154,7 +158,10 @@ namespace YG
 
 #if InterstitialAdv
         public void _InterstitialAdvShow() => YG2.InterstitialAdvShow();
-        public void _ResetTimerInterAdv() => YG2.ResetTimerInterAdv();
+        public void _ResetTimerInterAdv() => YGInsides.ResetTimerInterAdv();
+        public void _FirstInterAdvShow_optionalPlatform() => YG2.optionalPlatform.FirstInterAdvShow();
+        public void _OtherInterAdvShow_optionalPlatform() => YG2.optionalPlatform.OtherInterAdvShow();
+        public void _LoadInterAdv_optionalPlatform() => YG2.optionalPlatform.LoadInterAdv();
 
         private void OnOpenInterAdv() => Execute(EventYG2Type.OpenInterAdv);
         private void OnCloseInterAdv() => Execute(EventYG2Type.CloseInterAdv);
@@ -162,6 +169,7 @@ namespace YG
 #endif
 #if RewardedAdv
         public void _RewardedAdvShow(string id) => YG2.RewardedAdvShow(id);
+        public void _LoadRewardedAdv_optionalPlatform() => YG2.optionalPlatform.LoadRewardedAdv();
 
         private void OnOpenRewardedAdv() => Execute(EventYG2Type.OpenRewardedAdv);
         private void OnCloseRewaededAdv() => Execute(EventYG2Type.CloseRewaededAdv);
@@ -174,9 +182,6 @@ namespace YG
 #if Authorization
         public void _GetAuth() => YG2.GetAuth();
         public void _OpenAuthDialog() => YG2.OpenAuthDialog();
-
-        private void OnAuthTrue() => Execute(EventYG2Type.AuthTrue);
-        private void OnAuthFalse() => Execute(EventYG2Type.AuthFalse);
 #endif
 #if EnvirData
         public void _GetEnvirData() => YG2.GetEnvirData();
@@ -186,7 +191,6 @@ namespace YG
         public void _SwitchLanguage(string language) => YG2.SwitchLanguage(language);
 #endif
 #if Payments
-        public void _GetPayments() => YG2.GetPayments();
         public void _BuyPayments(string id) => YG2.BuyPayments(id);
         public void _ConsumePurchases() => YG2.ConsumePurchases();
 
@@ -196,7 +200,7 @@ namespace YG
 #if Storage
         public void _SetDefaultSaves() => YG2.SetDefaultSaves();
         public void _SaveProgress() => YG2.SaveProgress();
-        public void _LoadProgress() => YG2.LoadProgress();
+        public void _LoadProgress() => YGInsides.LoadProgress();
 #endif
 #if Fullscreen
         public void _SetFullscreen(bool fullscreen) => YG2.SetFullscreen(fullscreen);

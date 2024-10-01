@@ -1,12 +1,12 @@
 using UnityEngine;
 
-namespace YG
+namespace YG.Insides
 {
-    public partial class YG2Instance : MonoBehaviour
+    public partial class YGSendMessage : MonoBehaviour
     {
         private void Start()
         {
-            YG2.Start();
+            YG2.StartInit();
         }
 
         public void GetDataInvoke()

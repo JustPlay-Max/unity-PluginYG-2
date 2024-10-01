@@ -12,16 +12,13 @@ namespace YG.Insides
         public bool applySettingsBySwitchPlatform = true;
         public ProjectSettings projectSettings = new ProjectSettings();
 
-        public AddPlatformSettings addPlatformSettings;
-
         public void ApplyProjectSettings()
         {
             projectSettings.ApplySettings();
 
-            if (addPlatformSettings)
-                addPlatformSettings.ApplyProjectSettings();
+            CallAction.CallIByAttribute(typeof(ApplySettingsAttribute), typeof(AddOptions), YG2.infoYG.addOptions);
 
-            if (projectSettings.toggle_selectWebGLTemplate && projectSettings.selectWebGLTemplate)
+            if (YG2.infoYG.platformToggles.selectWebGLTemplate && projectSettings.selectWebGLTemplate)
             {
                 string templateName = nameDefining.Replace("Platform", string.Empty);
                 string templatePath = $"Assets/WebGLTemplates/{templateName}";
@@ -31,15 +28,13 @@ namespace YG.Insides
             }
         }
 
-        public void SelectPlatform()
+        public static void SelectPlatform()
         {
-            if (addPlatformSettings)
-                addPlatformSettings.SelectPlatform();
+            CallAction.CallIByAttribute(typeof(SelectPlatformAttribute), typeof(AddOptions), YG2.infoYG.addOptions);
         }
-        public void DeletePlatform()
+        public static void DeletePlatform()
         {
-            if (addPlatformSettings)
-                addPlatformSettings.SelectPlatform();
+            CallAction.CallIByAttribute(typeof(DeletePlatformAttribute), typeof(AddOptions), YG2.infoYG.addOptions);
         }
 #endif
     }

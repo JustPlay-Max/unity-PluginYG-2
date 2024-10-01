@@ -16,29 +16,15 @@ MonoBehaviour:
   applySettingsBySwitchPlatform: 1
   projectSettings:
     showFirstAdv: 0
-    toggle_showFirstAdv: 0
     interAdvInterval: 60
-    toggle_interAdvInterval: 0
     postponeCallByFail: 0
-    toggle_postponeCallByFail: 0
-    switchOCPlatform: 0
-    toggle_switchOCPlatform: 1
-    archivingBuild: 1
-    toggle_archivingBuild: 0
     selectWebGLTemplate: 1
-    toggle_selectWebGLTemplate: 1
     runInBackground: 0
-    toggle_runInBackground: 1
     enableExceptions: 2
-    toggle_enableExceptions: 1
     compressionFormat: 0
-    toggle_compressionFormat: 1
-    dataCaching: 1
-    toggle_dataCaching: 0
     decompressionFallback: 0
-    toggle_decompressionFallback: 1
-    colorSpace: 0
-    toggle_colorSpace: 0
     autoGraphicsAPI: 1
-    toggle_autoGraphicsAPI: 1
-  addPlatformSettings: {fileID: 0}
+    dataCaching: 1
+    colorSpace: 0
+    archivingBuild: 1
+    syncInitSDK: 0

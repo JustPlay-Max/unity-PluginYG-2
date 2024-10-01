@@ -1,12 +1,32 @@
 #if YandexGamePlatform
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 
 namespace YG
 {
     public partial class PlatformYG2 : IPlatformsYG2
     {
-        public void InitAwake() { }
-        public void InitStart() { }
+        [DllImport("__Internal")]
+        private static extern bool IsInitSDK_js();
+        public void InitAwake()
+        {
+            if (YG2.infoYG.basicSettings.syncInitSDK)
+            {
+#if !UNITY_EDITOR
+                if (IsInitSDK_js())
+                    YG2.SyncInitialization();
+#else
+                DelayInitSimulation();
+#endif
+            }
+        }
+#if UNITY_EDITOR
+        private async void DelayInitSimulation()
+        {
+            await Task.Delay(1000);
+            YG2.SyncInitialization();
+        }
+#endif
 
         [DllImport("__Internal")]
         private static extern void InitGame_js();
@@ -46,8 +66,14 @@ namespace YG
             GameplayStop_js();
 #endif
         }
+    }
+}
 
-        public void HappyTime() { }
+namespace YG.Insides
+{
+    public partial class YGSendMessage
+    {
+        public void InitSDKComplete() => YG2.SyncInitialization();
     }
 }
 #endif

@@ -103,6 +103,14 @@
         loadingCover.style.background = "url('Images/background.png') center / cover";
         loadingCover.style.display = "";
 
+        let StartUnityInstance;
+        let ygGameInstance = null;
+        let ysdk = null;
+        let initYSDK = false;
+        let initGame = false;
+        let syncInit = false;
+        const NO_DATA = 'no data';
+
         document.addEventListener('contextmenu', event => event.preventDefault());
         function FocusGame() {
             window.focus();
@@ -115,10 +123,19 @@
             FocusGame();
         });
 
-        let StartUnityInstance;
-        let ygGameInstance = null;
-        let ysdk = null;
-        let initGame = false;
+        document.addEventListener('visibilitychange', function () {
+            if (ysdk !== null && initGame == true) {
+                if (document.hidden) {
+                    YG2Instance('SetFocusWindowGame', 'false');
+                }
+                else {
+                    YG2Instance('SetFocusWindowGame', 'true');
+
+                    if ((ysdk.deviceInfo.isMobile() || ysdk.deviceInfo.isTablet()) && ysdk.screen.fullscreen.status == 'off')
+                        ysdk.screen.fullscreen.request();
+                }
+            }
+        });
 
         const script = document.createElement("script");
         script.src = loaderUrl;
@@ -135,7 +152,7 @@
                     console.error(message);
                 });
             };
-            if (LocalHost())
+            if (LocalHost() || syncInit)
                 StartUnityInstance_IfUnloaded();
         };
 
@@ -202,11 +219,18 @@
 
                 // Additional init modules
 
+                initYSDK = true;
+                if (ygGameInstance != null)
+                    ygGameInstance.SendMessage('YG2Instance', 'InitSDKComplete');
+
+                LogStyledMessage('Init YandexSDK Success');
+
             } catch (e) {
                 console.error('CRASH Initialization SDK: ', e);
             }
 
-            StartUnityInstance_IfUnloaded();
+            if (!syncInit)
+                StartUnityInstance_IfUnloaded();
         }
 
         function InitGame() {

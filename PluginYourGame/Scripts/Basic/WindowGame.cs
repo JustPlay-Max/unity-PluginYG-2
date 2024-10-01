@@ -26,16 +26,19 @@ namespace YG
             }
             else
             {
-                onFocusWindowGame?.Invoke(false);
-                onHideWindowGame?.Invoke();
-
                 GameplayStop(true);
                 visibilityWindowGame = false;
+
+                onFocusWindowGame?.Invoke(false);
+                onHideWindowGame?.Invoke();
             }
         }
     }
+}
 
-    public partial class YG2Instance
+namespace YG.Insides
+{
+    public partial class YGSendMessage
     {
         public void SetFocusWindowGame(string visible) => YG2.SetFocusWindowGame(visible == "true");
     }

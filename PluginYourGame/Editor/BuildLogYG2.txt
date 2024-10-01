@@ -1,0 +1,3 @@
+Build path: D:/Unity/Release/PluginYG_2-0/PluginYG_2-0
+Build number: 6
+PluginYG version: 1.0

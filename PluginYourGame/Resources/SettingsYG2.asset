@@ -1,0 +1,365 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efa747916aa66674d96ea40ca8a480b2, type: 3}
+  m_Name: SettingsYG2
+  m_EditorClassIdentifier: 
+  Authorization:
+    scopes: 1
+    playerPhotoSize: 0
+  InterstitialAdv:
+    showFirstAdv: 1
+    interAdvInterval: 60
+    postponeCallByFail: 0
+    postponeCallTimer: 10
+  LanguageYGLegasy:
+    domainAutoLocalization: com
+    languages:
+      ru: 1
+      en: 1
+      tr: 1
+      az: 0
+      be: 0
+      he: 0
+      hy: 0
+      ka: 0
+      et: 0
+      fr: 0
+      kk: 0
+      ky: 0
+      lt: 0
+      lv: 0
+      ro: 0
+      tg: 0
+      tk: 0
+      uk: 0
+      uz: 0
+      es: 0
+      pt: 0
+      ar: 0
+      id: 0
+      ja: 0
+      it: 0
+      de: 0
+      hi: 0
+    fonts:
+      defaultFont: []
+      ru: []
+      en: []
+      tr: []
+      az: []
+      be: []
+      he: []
+      hy: []
+      ka: []
+      et: []
+      fr: []
+      kk: []
+      ky: []
+      lt: []
+      lv: []
+      ro: []
+      tg: []
+      tk: []
+      uk: []
+      uz: []
+      es: []
+      pt: []
+      ar: []
+      id: []
+      ja: []
+      it: []
+      de: []
+      hi: []
+    fontsTMP:
+      defaultFont: []
+      ru: []
+      en: []
+      tr: []
+      az: []
+      be: []
+      he: []
+      hy: []
+      ka: []
+      et: []
+      fr: []
+      kk: []
+      ky: []
+      lt: []
+      lv: []
+      ro: []
+      tg: []
+      tk: []
+      uk: []
+      uz: []
+      es: []
+      pt: []
+      ar: []
+      id: []
+      ja: []
+      it: []
+      de: []
+      hi: []
+    fontsSizeCorrect:
+      ru: 
+      en: 
+      tr: 
+      az: 
+      be: 
+      he: 
+      hy: 
+      ka: 
+      et: 
+      fr: 
+      kk: 
+      ky: 
+      lt: 
+      lv: 
+      ro: 
+      tg: 
+      tk: 
+      uk: 
+      uz: 
+      es: 
+      pt: 
+      ar: 
+      id: 
+      ja: 
+      it: 
+      de: 
+      hi: 
+  Leaderboards:
+    enable: 1
+    saveScoreAnonymousPlayers: 1
+  Localization:
+    setLanguageMod: 1
+  Metrica:
+    enable: 0
+    metricaCounterID: 0
+    log: 1
+  QuitGameEvent:
+    enable: 1
+    objectName: NameYourObject
+    methodName: NameYourMethod
+  RewardedAdv:
+    rewardedAfterClosing: 1
+  Storage:
+    saveLocal: 1
+    saveCloud: 1
+    saveCloudInterval: 5
+    flush: 0
+  basicSettings:
+    platform: {fileID: 11400000, guid: c2a303d33a9fd394bae4c4b88b9a1c44, type: 2}
+    autoApplySettings: 1
+    autoPauseGame: 1
+    autoGRA: 1
+    logInEditor: 1
+    archivingBuild: 1
+    syncInitSDK: 0
+    loadSceneIfSDKLate: 1
+    loadSceneIndex: 0
+    pixelRatioEnable: 0
+    pixelRatioValue: 1.3
+    logoImageFormat: 0
+    backgroundImgFormat: 0
+  simulationInEditor:
+    authorized: 1
+    playerName: Player current
+    uniqueID: 000
+    playerPhoto: demo image
+    payingStatus: 0
+    device: 0
+    language: ru
+    flags:
+    - name: test
+      value: 1
+    leaderboards:
+    - technoName: test
+      entries: '1. Max: 10
+
+        2. Masha: 15
+
+        3. anonymous: 23
+
+        4.
+        Player 4: 30
+
+        5. Player current: 40
+
+        6. Player 6: 50
+
+        7.
+        Player 7: 60
+
+        8. Player 8: 70
+
+        9. Player 9: 80
+
+        10.
+        Player 10: 90'
+      isDefault: 0
+      isInvertSortOrder: 0
+      decimalOffset: 0
+      type: numeric
+      players:
+      - rank: 1
+        name: Max
+        score: 100
+        photo: demo image
+        uniqueID: 123
+      - rank: 2
+        name: Masha
+        score: 90
+        photo: demo image
+        uniqueID: 321
+      - rank: 3
+        name: anonymous
+        score: 80
+        photo: anonymous
+        uniqueID: 456
+      - rank: 4
+        name: Player 4
+        score: 70
+        photo: demo image
+        uniqueID: 321
+      - rank: 5
+        name: Player current
+        score: 60
+        photo: demo image
+        uniqueID: 000
+      - rank: 6
+        name: Player 6
+        score: 50
+        photo: demo image
+        uniqueID: 326
+      - rank: 7
+        name: Player 7
+        score: 40
+        photo: demo image
+        uniqueID: 327
+      - rank: 8
+        name: Player 8
+        score: 30
+        photo: demo image
+        uniqueID: 328
+      - rank: 9
+        name: Player 9
+        score: 20
+        photo: demo image
+        uniqueID: 329
+      - rank: 10
+        name: Player 10
+        score: 10
+        photo: demo image
+        uniqueID: 330
+      currentPlayer:
+        rank: 2
+        score: 10
+    - technoName: time
+      entries: '1. Max: 7123
+
+        2. Maria: 15321
+
+        3. anonymous: 62000
+
+        4.
+        Player 4: 122000
+
+        5. Player current: 127000
+
+        6. Player 6:
+        340000'
+      isDefault: 0
+      isInvertSortOrder: 1
+      decimalOffset: 0
+      type: numeric
+      players:
+      - rank: 1
+        name: Max
+        score: 7123
+        photo: demo image
+        uniqueID: 789
+      - rank: 2
+        name: Maria
+        score: 15321
+        photo: demo image
+        uniqueID: 987
+      - rank: 3
+        name: anonymous
+        score: 62000
+        photo: anonymous
+        uniqueID: 891
+      - rank: 4
+        name: Player 4
+        score: 122000
+        photo: demo image
+        uniqueID: 321
+      - rank: 5
+        name: Player current
+        score: 127000
+        photo: demo image
+        uniqueID: 000
+      - rank: 6
+        name: Player 6
+        score: 340000
+        photo: demo image
+        uniqueID: 321
+      currentPlayer:
+        rank: 2
+        score: 10
+    testBuyFail: 0
+    purshases:
+    - id: gun
+      title: Gun
+      description: Product - Gun
+      imageURI: demo image
+      price: 5 YAN
+      priceValue: 5
+      priceCurrencyCode: YAN
+      currencyImageURL: https://yastatic.net/s3/games-static/static-data/images/payments/sdk/currency-icon-s@2x.png
+      consumed: 1
+    - id: armor
+      title: Armor
+      description: Product - Armor
+      imageURI: demo image
+      price: 10 YAN
+      priceValue: 10
+      priceCurrencyCode: YAN
+      currencyImageURL: https://yastatic.net/s3/games-static/static-data/images/payments/sdk/currency-icon-s@2x.png
+      consumed: 1
+    - id: grenade
+      title: Grenade
+      description: Product - Grenade
+      imageURI: demo image
+      price: 30 YAN
+      priceValue: 30
+      priceCurrencyCode: YAN
+      currencyImageURL: https://yastatic.net/s3/games-static/static-data/images/payments/sdk/currency-icon-s@2x.png
+      consumed: 1
+    serverTime: 1721201231000
+    advIntervalSimulation: 60
+    durationAdv: 0.5
+    loadAdv: 0
+    testFailAds: 0
+  platformToggles:
+    showFirstAdv: 0
+    interAdvInterval: 0
+    postponeCallByFail: 0
+    selectWebGLTemplate: 1
+    runInBackground: 1
+    enableExceptions: 1
+    compressionFormat: 1
+    decompressionFallback: 1
+    autoGraphicsAPI: 1
+    dataCaching: 0
+    colorSpace: 0
+    archivingBuild: 0
+    syncInitSDK: 1

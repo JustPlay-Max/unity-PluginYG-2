@@ -30,7 +30,7 @@ namespace YG.EditorScr
         public static void ShowWindow()
         {
             window = GetWindow<VersionControlWindow>(Langs.versionControl + " YG2");
-            window.position = new Rect(300, 200, 750, 700);
+            window.position = new Rect(300, 200, 900, 800);
             window.minSize = new Vector2(700, 500);
             Server.LoadServerInfo(true);
         }
@@ -365,7 +365,7 @@ namespace YG.EditorScr
                                         else if (Directory.Exists(patchPlatforms))
                                         {
                                             DeletePlatformWebGLTemplate(modules[i].nameModule);
-                                            YG2.infoYG.basicSettings.platform.DeletePlatform();
+                                            PlatformSettings.DeletePlatform();
 
                                             FileYG.DeleteDirectory(patchPlatforms);
                                         }
@@ -425,7 +425,7 @@ namespace YG.EditorScr
 
                                             if (isModulPlatform)
                                             {
-                                                YG2.infoYG.basicSettings.platform.DeletePlatform();
+                                                PlatformSettings.DeletePlatform();
                                                 folderName += "Platform";
 
                                                 DeletePlatformWebGLTemplate(modules[i].nameModule);
@@ -497,6 +497,7 @@ namespace YG.EditorScr
                 DefineSymbols.RemoveDefine(InfoYG.Inst().basicSettings.platform.nameDefining);
             DefineSymbols.RemoveDefine("RU_YG2");
             DefineSymbols.RemoveDefine("TMP_YG2");
+            DefineSymbols.RemoveDefine("PLUGIN_YG_2");
 
             Close();
 

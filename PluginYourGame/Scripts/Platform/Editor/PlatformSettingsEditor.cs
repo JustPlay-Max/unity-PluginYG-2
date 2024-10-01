@@ -1,10 +1,10 @@
+using System;
+using System.IO;
+using System.Reflection;
 using UnityEngine;
 using UnityEditor;
-using YG.Insides;
-using System;
-using System.Reflection;
 using YG.Utils;
-using System.IO;
+using YG.Insides;
 
 namespace YG.EditorScr
 {
@@ -77,19 +77,14 @@ namespace YG.EditorScr
             EditorGUILayout.LabelField(Langs.projectSettings, TextStyles.Header());
             DisplayFieldsWithToggles(scr.projectSettings);
 
-            if (scr.addPlatformSettings
-                && scr.addPlatformSettings.GetType().GetFields(BindingFlags.Public | BindingFlags.Instance).Length > 0)
+            if (YG2.infoYG.addOptions.GetType().GetFields(BindingFlags.Public | BindingFlags.Instance).Length > 0)
             {
                 GUILayout.Space(20);
                 EditorGUILayout.LabelField(Langs.addProjectSettings, TextStyles.Header());
-                DisplayFieldsWithToggles(scr.addPlatformSettings);
+                DisplayFieldsWithToggles(YG2.infoYG.addOptions);
             }
 
             GUILayout.Space(20);
-            tooltip = new GUIContent("Add Platform Settings", Langs.t_nameDefining);
-            scr.addPlatformSettings = (AddPlatformSettings)EditorGUILayout.ObjectField(tooltip, scr.addPlatformSettings, typeof(AddPlatformSettings), false);
-            GUILayout.Space(10);
-
             if (FastButton.Stringy(Langs.applySettingsProject))
                 scr.ApplyProjectSettings();
 
@@ -99,42 +94,44 @@ namespace YG.EditorScr
             Repaint();
         }
 
-        private void DisplayFieldsWithToggles(object target)
+        private void DisplayFieldsWithToggles(object scrObject)
         {
-            var fields = target.GetType().GetFields(BindingFlags.Public | BindingFlags.Instance);
+            FieldInfo[] fields = scrObject.GetType().GetFields(BindingFlags.Public | BindingFlags.Instance);
+            object toggleScrObject = YG2.infoYG.platformToggles;
+            FieldInfo[] toggleFields = toggleScrObject.GetType().GetFields(BindingFlags.Public | BindingFlags.Instance);
 
-            foreach (var field in fields)
+            foreach (FieldInfo field in fields)
             {
-                string fieldName = field.Name;
+                bool isToggle = false;
 
-                if (fieldName.StartsWith("toggle_"))
+                for (int i = 0; i < toggleFields.Length; i++)
                 {
-                    string targetFieldName = fieldName.Substring(7);
-                    var targetField = Array.Find(fields, f => f.Name == targetFieldName);
+                    FieldInfo toggle = toggleFields[i];
 
-                    if (targetField != null)
+                    if (toggle.Name == field.Name)
                     {
                         EditorGUILayout.BeginHorizontal(YGEditorStyles.selectable);
 
-                        bool toggleValue = (bool)field.GetValue(target);
+                        bool toggleValue = (bool)toggle.GetValue(toggleScrObject);
                         bool newToggleValue = EditorGUILayout.Toggle(toggleValue, GUILayout.Width(20));
-                        field.SetValue(target, newToggleValue);
+                        toggle.SetValue(toggleScrObject, newToggleValue);
 
                         EditorGUI.BeginDisabledGroup(!newToggleValue);
-                        DrawField(targetField, target);
+                        DrawField(field, scrObject);
                         EditorGUI.EndDisabledGroup();
 
                         EditorGUILayout.EndHorizontal();
+
+                        isToggle = true;
+                        break;
                     }
                 }
-                else if (!fieldName.StartsWith("toggle_"))
+
+                if (!isToggle)
                 {
-                    if (Array.Find(fields, f => f.Name == "toggle_" + fieldName) == null)
-                    {
-                        EditorGUI.indentLevel++;
-                        DrawField(field, target);
-                        EditorGUI.indentLevel--;
-                    }
+                    EditorGUILayout.BeginHorizontal(YGEditorStyles.selectable);
+                    DrawField(field, scrObject);
+                    EditorGUILayout.EndHorizontal();
                 }
             }
         }

@@ -10,7 +10,7 @@
         private static bool gameReadyDone;
 
         [StartYG]
-        public static void InitGRA()
+        private static void InitGRA()
         {
             if (infoYG.basicSettings.autoGRA)
                 GameReadyAPI();
