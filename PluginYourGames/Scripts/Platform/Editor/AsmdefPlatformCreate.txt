@@ -1,0 +1,14 @@
+{
+    "name": "___PLATFORM_NAME___",
+    "rootNamespace": "",
+    "references": [],
+    "includePlatforms": [ "XboxOne" ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

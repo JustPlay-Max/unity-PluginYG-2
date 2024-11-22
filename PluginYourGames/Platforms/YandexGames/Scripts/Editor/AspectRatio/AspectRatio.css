@@ -1,0 +1,21 @@
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  margin: 0;
+  overflow: hidden;
+}
+
+#unity-container {
+  position: fixed;
+  display: flex;
+  aspect-ratio: ___ASPECT_RATIO___;
+  width: min(calc(100vh*(___ASPECT_RATIO___)), 100vw);
+  height: auto;
+}
+
+#unity-container.unity-mobile {
+  width: 100%;
+  height: 100%;
+}

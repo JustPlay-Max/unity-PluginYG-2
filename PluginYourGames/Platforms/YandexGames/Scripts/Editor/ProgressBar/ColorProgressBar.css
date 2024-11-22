@@ -1,0 +1,23 @@
+.spinner {
+    border-top: 1.1em solid ___COLOR_BAR_HALF___;
+    border-right: 1.1em solid ___COLOR_BAR_HALF___;
+    border-bottom: 1.1em solid ___COLOR_BAR_HALF___;
+    border-left: 1.1em solid ___COLOR_BAR___;
+}
+
+#unity-progress-bar-empty {
+    border-color: ___COLOR_BORDER___;
+    width: ___WIDTH_BAR___%;
+}
+
+#unity-progress-bar-full {
+    background: ___COLOR_BAR___;
+}
+
+.light #unity-progress-bar-empty {
+    border-color: ___COLOR_BORDER___;
+}
+
+.light #unity-progress-bar-full {
+    background: ___COLOR_BAR___;
+}

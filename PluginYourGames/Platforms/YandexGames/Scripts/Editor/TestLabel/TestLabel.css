@@ -1,0 +1,14 @@
+#test-label {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    padding: 3px 8px;
+    background-color: #454545;
+    color: #FFDF73;
+    font-weight: bold;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    cursor: pointer;
+    z-index: 1000;
+    border-radius: 8px;
+}
