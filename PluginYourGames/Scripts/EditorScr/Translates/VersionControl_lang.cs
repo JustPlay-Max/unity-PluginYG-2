@@ -19,6 +19,7 @@ namespace YG.Insides
         public const string importPackage = "Импорт пакета";
         public const string thirdPartyDialog = "Согласны ли вы загрузить пакет со стороннего ресурса?";
         public const string quickImport = "Поставьте галочки над теми модулями, которые хотите импортировать.\n\nПри быстром импорте вы должны понимать - какие модули зависят от друг-друга.\nЕсли возникают непредвиденные ошибки, импортируйте модули отдельно.";
+        public const string updatePluginFirst = "Сначала обновите Plugin Your Games. Затем уже модули.\n\nНе обращайте внимания, если в процессе обновления возникнут ошибки компиляции. Просто обновите все модули до последних версий.";
 #else
         public const string removeBeforeImport = "Remove the module before updating (recommended)";
         public const string projectVersion = "Installed version";
@@ -35,6 +36,7 @@ namespace YG.Insides
         public const string importPackage = "Import package";
         public const string thirdPartyDialog = "Do you agree to download the package from a third-party resource?";
         public const string quickImport = "Check the boxes above the modules that you want to import.\n\nWhen importing quickly, you need to understand which modules depend on each other.\nIf unexpected errors occur, import the modules separately.";
+        public const string updatePluginFirst = "Update Plugin first. Then the modules.\n\nDo not pay attention if compilation errors occur during the update process. Just update all modules to the latest versions.";
 #endif
     }
 }
