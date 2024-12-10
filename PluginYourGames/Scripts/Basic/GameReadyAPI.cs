@@ -13,7 +13,16 @@
         private static void InitGRA()
         {
             if (infoYG.Basic.autoGRA)
-                GameReadyAPI();
+            {
+                if (isSDKEnabled)
+                {
+                    GameReadyAPI();
+                }
+                else
+                {
+                    onGetSDKData += InvokeGameReadyAPI;
+                }
+            }
         }
 
         public static void GameReadyAPI()
@@ -27,6 +36,12 @@
                 gameReadyDone = true;
                 iPlatform.GameReadyAPI();
             }
+        }
+
+        private static void InvokeGameReadyAPI()
+        {
+            onGetSDKData -= InvokeGameReadyAPI;
+            GameReadyAPI();
         }
     }
 }

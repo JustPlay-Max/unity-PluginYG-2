@@ -54,6 +54,10 @@ namespace YG
             [NestedYG(nameof(loadSceneIfSDKLate), nameof(syncInitSDK)), Min(0)]
 #endif
             public int loadSceneIndex;
+#if UNITY_EDITOR
+            [NestedYG(nameof(loadSceneIfSDKLate), nameof(syncInitSDK)), Min(0)]
+#endif
+            public bool simulationLoadScene;
         }
     }
 }

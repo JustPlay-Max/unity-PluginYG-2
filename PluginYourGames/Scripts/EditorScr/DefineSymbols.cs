@@ -15,7 +15,7 @@ namespace YG.EditorScr
     {
         public const string YG2_DEFINE = "PLUGIN_YG_2";
         public const string LANG_DEFINE = "RU_YG2";
-        public const string TMP_DEFINE = "TMP_YG2", TMP_PACKAGE = "com.unity.textmeshpro";
+        public const string TMP_DEFINE = "TMP_YG2", TMP_PACKAGE = "com.unity.textmeshpro", TMP_NEW_PACKAGE = "com.unity.ugui";
         public const string NJSON_DEFINE = "NJSON_YG2", NJSON_PACKAGE = "com.unity.nuget.newtonsoft-json";
         public const string NJSON_STORAGE_DEFINE = "NJSON_STORAGE_YG2";
 
@@ -55,8 +55,14 @@ namespace YG.EditorScr
             AddDefine(YG2_DEFINE);
             PlatformDefineSymbols();
             ModulesDefineSymbols();
-            DefinePackage(TMP_PACKAGE, TMP_DEFINE);
-            DefinePackage(NJSON_PACKAGE, NJSON_DEFINE);
+
+            if (UnityPackagesManager.IsPackageImported(TMP_PACKAGE) || UnityPackagesManager.IsPackageImported(TMP_NEW_PACKAGE))
+                AddDefine(TMP_DEFINE);
+            else RemoveDefine(TMP_DEFINE);
+
+            if (UnityPackagesManager.IsPackageImported(NJSON_PACKAGE))
+                AddDefine(NJSON_DEFINE);
+            else RemoveDefine(NJSON_DEFINE);
         }
 
         public static void PlatformDefineSymbols()
@@ -213,14 +219,6 @@ namespace YG.EditorScr
 
             foreach (var folderName in folderNames)
                 AddDefine(folderName + "_yg");
-        }
-
-        private static void DefinePackage(string packageName, string defineSymbols)
-        {
-            if (UnityPackagesManager.IsPackageImported(packageName))
-                AddDefine(defineSymbols);
-            else
-                RemoveDefine(defineSymbols);
         }
 
         public static bool CheckDefine(string define)

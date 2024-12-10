@@ -37,7 +37,7 @@ namespace YG
                     instance = infoRes;
 #if PLATFORM_WEBGL
                     if (EditorUtility.DisplayDialog($"Optimal settings",
-                        "Установить оптимальные настройки проекта плагина для платформы по умолчанию «Яндекс Игры»? (Рекомендуется)\n\nShould I set the optimal project end plugin settings for the default Yandex Games platform? (Recommended)",
+                        "Выставить оптимальные настройки проекта и плагина для платформы по умолчанию «Яндекс Игры»? (Рекомендуется)\n\nSet the optimal project and plugin settings for the default platform «Yandex Games» platform? (Recommended)",
                         "Yes",
                         "No"))
                     {

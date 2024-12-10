@@ -5,7 +5,7 @@ namespace YG.EditorScr.BuildModify
     {
         public static void GradientBackground()
         {
-            string pathCSS = $"{InfoYG.CORE_FOLDER_YG2}/Platforms /YandexGames/Scripts/Editor/GradientBackground/GradientBackground.css";
+            string pathCSS = $"{InfoYG.CORE_FOLDER_YG2}/Platforms/YandexGames/Scripts/Editor/GradientBackground/GradientBackground.css";
 
             if (infoYG.Templates.backgroundImgFormat == InfoYG.TemplatesSettings.BackgroundImageFormat.Gradient)
             {

@@ -144,7 +144,8 @@
                 createUnityInstance(canvas, config, (progress) => {
                     spinner.style.display = "none";
                     progressBarEmpty.style.display = "";
-                    progressBarFull.style.width = `${100 * progress}%`;
+                    const adjustedProgress = Math.max(progress, 0.05);
+                    progressBarFull.style.width = `${100 * adjustedProgress}%`;
                 }).then((unityInstance) => {
                     ygGameInstance = unityInstance;
                     loadingCover.style.display = "none";

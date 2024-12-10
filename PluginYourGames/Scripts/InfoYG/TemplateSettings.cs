@@ -42,8 +42,12 @@ namespace YG
             {
                 [Tooltip(Langs.t_progressBar_round)]
                 public bool round = true;
-                [Range(0, 100), Tooltip(Langs.t_progressBar_width)]
+                [Range(1, 20), NestedYG(nameof(round))]
+                public int roundAngle = 10;
+                [Range(1, 100), Tooltip(Langs.t_progressBar_width)]
                 public int width = 30;
+                [Range(1, 100)]
+                public int height = 24;
                 [Tooltip(Langs.t_progressBar_color1)]
                 public Color color1 = new Color(0.25f, 0.6392f, 1f, 1f);
                 [Tooltip(Langs.t_progressBar_color2)]

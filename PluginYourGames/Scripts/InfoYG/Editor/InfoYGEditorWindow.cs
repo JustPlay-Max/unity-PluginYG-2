@@ -301,29 +301,7 @@ namespace YG.EditorScr
             lastPlatform = currentPlatform;
 
             GUILayout.Space(20);
-#if Storage_yg || AutoTranslateLangs_yg
-            if (!DefineSymbols.CheckDefine(DefineSymbols.NJSON_DEFINE))
-            {
-                if (FastButton.Stringy(Langs.importNJSON))
-                    UnityPackagesManager.ImportPackage(DefineSymbols.NJSON_PACKAGE);
 
-            }
-#endif
-#if Storage_yg
-            if (DefineSymbols.CheckDefine(DefineSymbols.NJSON_DEFINE))
-            {
-                if (!DefineSymbols.CheckDefine(DefineSymbols.NJSON_STORAGE_DEFINE))
-                {
-                    if (FastButton.Stringy(Langs.activateNJSONForSave))
-                        DefineSymbols.AddDefine(DefineSymbols.NJSON_STORAGE_DEFINE);
-                }
-                else
-                {
-                    if (FastButton.Stringy(Langs.deactivateNJSONForSave))
-                        DefineSymbols.RemoveDefine(DefineSymbols.NJSON_STORAGE_DEFINE);
-                }
-            }
-#endif
             if (FastButton.Stringy(Langs.resetInfoSettings))
             {
                 if (EditorUtility.DisplayDialog(Langs.resetInfoSettings, Langs.resetInfoSettings_dialog, "Ok", Langs.cancel))
@@ -346,6 +324,28 @@ namespace YG.EditorScr
                     Reserialize();
                 }
             }
+
+            if (!DefineSymbols.CheckDefine(DefineSymbols.NJSON_DEFINE))
+            {
+                if (FastButton.Stringy(Langs.importNJSON))
+                    UnityPackagesManager.ImportPackage(DefineSymbols.NJSON_PACKAGE);
+
+            }
+#if Storage_yg
+            if (DefineSymbols.CheckDefine(DefineSymbols.NJSON_DEFINE))
+            {
+                if (!DefineSymbols.CheckDefine(DefineSymbols.NJSON_STORAGE_DEFINE))
+                {
+                    if (FastButton.Stringy(Langs.activateNJSONForSave))
+                        DefineSymbols.AddDefine(DefineSymbols.NJSON_STORAGE_DEFINE);
+                }
+                else
+                {
+                    if (FastButton.Stringy(Langs.deactivateNJSONForSave))
+                        DefineSymbols.RemoveDefine(DefineSymbols.NJSON_STORAGE_DEFINE);
+                }
+            }
+#endif
 
             if (isExampleFiles)
             {

@@ -1,8 +1,8 @@
 #unity-progress-bar-empty {
-    border-radius: 12px;
+    border-radius: __ROUND_BAR_EMPTY__px;
 }
 
 #unity-progress-bar-full {
-    border-radius: 10px;
-    transition: width 0.3s ease;
+    border-radius: __ROUND_BAR_FULL__px;
+    transition: width 0.5s ease;
 }

@@ -36,7 +36,7 @@ namespace YG.Insides
         public const string t_advDurationAdv = "Длительность симуляции показа рекламы.";
         public const string t_loadAdv = "Задержка открытия рекламы. Может быть полезна для тестирования уведомления о том, что скоро откроется реклама, перед ёё показом (в момент ожидания рекламы).";
 
-        public const string switchLang = "on English";
+        public const string switchLang = "Русский";
         public const string documentation = "Документация";
         public const string helpChat = "Помощь в чате";
         public const string video = "Видео";
@@ -91,7 +91,7 @@ namespace YG.Insides
         public const string t_progressBar_width = "The width of the download bandwidth.";
         public const string t_progressBar_color1 = "The main color of the loading bar.";
         public const string t_progressBar_color2 = "The secondary color of the loading bar (along the edges). To get a uniform color for the entire loading strip, specify the same color for color 1 and color 2.";
-        public const string switchLang = "вкл Русский";
+        public const string switchLang = "English";
         public const string documentation = "Documentation";
         public const string helpChat = "Help in chat";
         public const string video = "Video";

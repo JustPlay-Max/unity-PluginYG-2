@@ -105,9 +105,10 @@ namespace YG
 #if UNITY_EDITOR
         public static async void SyncInitialization()
         {
-            await System.Threading.Tasks.Task.Delay(1000);
+            if (infoYG.Basic.simulationLoadScene)
+                await System.Threading.Tasks.Task.Delay(1000);
 #else
-            public static void SyncInitialization()
+        public static void SyncInitialization()
         {
 #endif
             if (infoYG.Basic.syncInitSDK)
@@ -132,8 +133,8 @@ namespace YG
 #if !UNITY_EDITOR
                         SceneManager.LoadScene(infoYG.Basic.loadSceneIndex);
 #else
-                        if (SceneManager.GetActiveScene().buildIndex == 0)
-                            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                        if (infoYG.Basic.simulationLoadScene)
+                            SceneManager.LoadScene(infoYG.Basic.loadSceneIndex);
 #endif
                         void LoadLastScene(Scene scene, LoadSceneMode mode)
                         {
@@ -149,13 +150,13 @@ namespace YG
 
             void LoadNextScene()
             {
-#if !UNITY_EDITOR
-                if (infoYG.Basic.loadSceneIfSDKLate)
+                if (infoYG.Basic.loadSceneIfSDKLate && infoYG.Basic.loadSceneIndex != 0)
                 {
-                    if (infoYG.Basic.loadSceneIndex != 0)
+#if UNITY_EDITOR
+                    if (infoYG.Basic.simulationLoadScene)
+#endif
                         SceneManager.LoadScene(infoYG.Basic.loadSceneIndex);
                 }
-#endif
             }
         }
 
@@ -171,9 +172,16 @@ namespace YG
                 return;
 
             if (pause)
+            {
                 GameplayStop(true);
+            }
             else
+            {
+                if (nowAdsShow)
+                    return;
+
                 GameplayStart(true);
+            }
 
             pauseGame = pause;
             onPauseGame?.Invoke(pause);
