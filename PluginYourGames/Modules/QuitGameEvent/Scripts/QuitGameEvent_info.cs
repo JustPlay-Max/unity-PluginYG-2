@@ -1,4 +1,4 @@
-using System;
+п»їusing System;
 using UnityEngine;
 
 namespace YG
@@ -11,20 +11,20 @@ namespace YG
         public partial class QuitGameEventSettings
         {
 #if RU_YG2
-            [Tooltip("Выполнять определённый метод при закрытии или обновлении страницы игры.")]
+            [Tooltip("Р’С‹РїРѕР»РЅСЏС‚СЊ РѕРїСЂРµРґРµР»С‘РЅРЅС‹Р№ РјРµС‚РѕРґ РїСЂРё Р·Р°РєСЂС‹С‚РёРё РёР»Рё РѕР±РЅРѕРІР»РµРЅРёРё СЃС‚СЂР°РЅРёС†С‹ РёРіСЂС‹.")]
 #else
             [Tooltip("Perform a specific method when closing or refreshing the game page.")]
 #endif
             public bool enable;
 #if RU_YG2
-            [Tooltip("Имя объекта, который содержит нужный метод для выполнения после закрытия игры.")]
+            [Tooltip("РРјСЏ РѕР±СЉРµРєС‚Р°, РєРѕС‚РѕСЂС‹Р№ СЃРѕРґРµСЂР¶РёС‚ РЅСѓР¶РЅС‹Р№ РјРµС‚РѕРґ РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РїРѕСЃР»Рµ Р·Р°РєСЂС‹С‚РёСЏ РёРіСЂС‹.")]
 #else
             [Tooltip("The name of the object that contains the desired method to execute after the game is closed.")]
 #endif
             [NestedYG(nameof(enable))]
             public string objectName = "NameYourObject";
 #if RU_YG2
-            [Tooltip("Имя метода. Подходит публичный метод без перегрузок.")]
+            [Tooltip("РРјСЏ РјРµС‚РѕРґР°. РџРѕРґС…РѕРґРёС‚ РїСѓР±Р»РёС‡РЅС‹Р№ РјРµС‚РѕРґ Р±РµР· РїРµСЂРµРіСЂСѓР·РѕРє.")]
 #else
             [Tooltip("The name of the method. A public method without overloads is suitable.")]
 #endif

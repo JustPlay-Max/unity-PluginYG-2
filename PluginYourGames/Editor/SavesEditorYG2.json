@@ -1,0 +1,29 @@
+{
+    "stringKeys": [
+        "stringKey"
+    ],
+    "stringValues": [
+        "stringKey"
+    ],
+    "floatKeys": [
+        "floatKey"
+    ],
+    "floatValues": [
+        1.600000023841858
+    ],
+    "intKeys": [
+        "intKey"
+    ],
+    "intValues": [
+        3
+    ],
+    "intExample": 5,
+    "strExample": "Hello!",
+    "boolExample": [
+        false,
+        false,
+        false,
+        false
+    ],
+    "idSave": 25
+}

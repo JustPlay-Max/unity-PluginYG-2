@@ -25,6 +25,7 @@ namespace YG.EditorScr.BuildModify
         {
             infoYG = YG2.infoYG;
             BUILD_PATCH = buildPatch;
+            List<string> errors = new List<string>();
 #if PLATFORM_WEBGL
             string indexFilePath = Path.Combine(buildPatch, "index.html");
             indexFile = File.ReadAllText(indexFilePath);
@@ -36,7 +37,6 @@ namespace YG.EditorScr.BuildModify
             Type type = typeof(ModifyBuild);
             MethodInfo[] methods = type.GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly);
 
-            List<string> errors = new List<string>();
             foreach (MethodInfo method in methods)
             {
                 try

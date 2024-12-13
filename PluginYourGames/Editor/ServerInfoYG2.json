@@ -1,0 +1,168 @@
+{
+    "redirection": "",
+    "documentation": "https://max-games.ru/plugin-yg/",
+    "chat": "https://t.me/pluginYG",
+    "video": "https://www.youtube.com/playlist?list=PLjS5DHdpBH0Q9qKLenTNbYwaB5IIIsCya",
+    "playerImage": "https://max-games.ru/public/pluginYG2/images/player.png",
+    "purchaseImage": "https://max-games.ru/public/pluginYG2/images/purchase.png",
+    "modules": [
+        {
+            "name": "PluginYG2",
+            "version": "2.002",
+            "download": "https://max-games.ru/public/pluginYG2/other/PluginYG2.unitypackage",
+            "doc": "https://max-games.ru/plugin-yg/doc/"
+        },
+        {
+            "name": "YandexGames",
+            "version": "1.002",
+            "download": "https://max-games.ru/public/pluginYG2/platforms/YandexGames.unitypackage",
+            "doc": "https://max-games.ru/plugin-yg/doc/",
+            "platform": true
+        },
+        {
+            "name": "CrazyGames",
+            "version": "1.0",
+            "download": "https://boosty.to/maximalist/posts/75f8b5d7-6d88-4de7-a94d-e27750bc445d?share=post_link",
+            "noLoad": true,
+            "doc": "https://max-games.ru/crazy/",
+            "platform": true
+        },
+        {
+            "name": "InterstitialAdv",
+            "version": "1.0",
+            "download": "https://max-games.ru/public/pluginYG2/modules/InterstitialAdv.unitypackage",
+            "doc": "https://max-games.ru/plugin-yg/doc/inter-ad/"
+        },
+        {
+            "name": "RewardedAdv",
+            "version": "1.0",
+            "download": "https://max-games.ru/public/pluginYG2/modules/RewardedAdv.unitypackage",
+            "doc": "https://max-games.ru/plugin-yg/doc/reward-ad/"
+        },
+        {
+            "name": "EnvirData",
+            "version": "1.001",
+            "download": "https://max-games.ru/public/pluginYG2/modules/EnvirData.unitypackage",
+            "doc": "https://max-games.ru/plugin-yg/doc/envir/"
+        },
+        {
+            "name": "Authorization",
+            "version": "1.0",
+            "download": "https://max-games.ru/public/pluginYG2/modules/Authorization.unitypackage",
+            "doc": "https://max-games.ru/plugin-yg/doc/auth/"
+        },
+        {
+            "name": "Storage",
+            "version": "1.0",
+            "download": "https://max-games.ru/public/pluginYG2/modules/Storage.unitypackage",
+            "doc": "https://max-games.ru/plugin-yg/doc/storage/"
+        },
+        {
+            "name": "PlayerStats",
+            "version": "1.001",
+            "download": "https://max-games.ru/public/pluginYG2/modules/PlayerStats.unitypackage",
+            "doc": "https://max-games.ru/plugin-yg/doc/storage/",
+            "dependencies": "Authorization"
+        },
+        {
+            "name": "RedefinePlayerPrefs",
+            "version": "1.001",
+            "download": "https://max-games.ru/public/pluginYG2/modules/RedefinePlayerPrefs.unitypackage",
+            "doc": "https://max-games.ru/plugin-yg/doc/storage/"
+        },
+        {
+            "name": "Leaderboards",
+            "version": "1.0",
+            "download": "https://max-games.ru/public/pluginYG2/modules/Leaderboards.unitypackage",
+            "doc": "https://max-games.ru/plugin-yg/doc/lb/",
+            "dependencies": "Authorization"
+        },
+        {
+            "name": "Localization",
+            "version": "1.0",
+            "download": "https://max-games.ru/public/pluginYG2/modules/Localization.unitypackage",
+            "doc": "https://max-games.ru/plugin-yg/doc/lang/"
+        },
+        {
+            "name": "AutoTranslateLangs",
+            "version": "1.001",
+            "download": "https://max-games.ru/public/pluginYG2/modules/AutoTranslateLangs.unitypackage",
+            "doc": "https://max-games.ru/plugin-yg/doc/lang/",
+            "dependencies": "Localization"
+        },
+        {
+            "name": "Payments",
+            "version": "1.0",
+            "download": "https://max-games.ru/public/pluginYG2/modules/Payments.unitypackage",
+            "doc": "https://max-games.ru/plugin-yg/doc/pay/"
+        },
+        {
+            "name": "Metrica",
+            "version": "1.001",
+            "download": "https://max-games.ru/public/pluginYG2/modules/Metrica.unitypackage",
+            "doc": "https://max-games.ru/plugin-yg/doc/metrica/"
+        },
+        {
+            "name": "Review",
+            "version": "1.0",
+            "download": "https://max-games.ru/public/pluginYG2/modules/Review.unitypackage",
+            "doc": "https://max-games.ru/other/"
+        },
+        {
+            "name": "StickyAdv",
+            "version": "1.0",
+            "download": "https://max-games.ru/public/pluginYG2/modules/StickyAdv.unitypackage",
+            "doc": "https://max-games.ru/other/"
+        },
+        {
+            "name": "ServerTime",
+            "version": "1.0",
+            "download": "https://max-games.ru/public/pluginYG2/modules/ServerTime.unitypackage",
+            "doc": "https://max-games.ru/other/"
+        },
+        {
+            "name": "Fullscreen",
+            "version": "1.0",
+            "download": "https://max-games.ru/public/pluginYG2/modules/Fullscreen.unitypackage",
+            "doc": "https://max-games.ru/other/"
+        },
+        {
+            "name": "Flags",
+            "version": "1.001",
+            "download": "https://max-games.ru/public/pluginYG2/modules/Flags.unitypackage",
+            "doc": "https://max-games.ru/flags/"
+        },
+        {
+            "name": "OpenURL",
+            "version": "1.001",
+            "download": "https://max-games.ru/public/pluginYG2/modules/OpenURL.unitypackage",
+            "doc": "https://max-games.ru/open-url/",
+            "dependencies": "EnvirData"
+        },
+        {
+            "name": "TV",
+            "version": "1.0",
+            "download": "https://max-games.ru/public/pluginYG2/modules/TV.unitypackage",
+            "doc": "https://max-games.ru/plugin-yg/doc/tv/",
+            "dependencies": "EnvirData"
+        },
+        {
+            "name": "GameLabel",
+            "version": "1.0",
+            "download": "https://max-games.ru/public/pluginYG2/modules/GameLabel.unitypackage",
+            "doc": "https://max-games.ru/other/"
+        },
+        {
+            "name": "QuitGameEvent",
+            "version": "1.001",
+            "download": "https://max-games.ru/public/pluginYG2/modules/QuitGameEvent.unitypackage",
+            "doc": "https://max-games.ru/other/"
+        },
+        {
+            "name": "Clipboard",
+            "version": "1.0",
+            "download": "https://max-games.ru/public/pluginYG2/modules/Clipboard.unitypackage",
+            "doc": "https://max-games.ru/other/"
+        }
+    ]
+}
