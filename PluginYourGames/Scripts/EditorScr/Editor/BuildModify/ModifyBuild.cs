@@ -20,6 +20,7 @@ namespace YG.EditorScr.BuildModify
         private static string styleFile;
         private static string methodName;
         private enum CodeType { HeadNative, BodyNative, JS, Head, Body, Init0, Init1, Init2, Init, Start };
+        public static Action onModifyComplete;
 
         public static void ModifyIndex(string buildPatch)
         {
@@ -52,7 +53,7 @@ namespace YG.EditorScr.BuildModify
                 {
 #if RU_YG2
                     Debug.LogError($"(Модуль <color={ERROR_COLOR}>{methodName}</color>) При модификации файлов билда возникла ошибка!\n{ex}");
-                    //#else
+#else
                     Debug.LogError($"(Module <color={ERROR_COLOR}>{methodName}</color>) Error occurred when modifying build files!\n{ex}");
 #endif
                     errors.Add(methodName);
@@ -102,6 +103,8 @@ namespace YG.EditorScr.BuildModify
                     Debug.LogError($"<color={ERROR_COLOR}>The build was completed with an error!</color> It is necessary to eliminate errors so that the <color={ERROR_COLOR}>{errorModulesText}</color> modules work properly.");
 #endif
                 }
+
+                onModifyComplete?.Invoke();
             };
         }
 

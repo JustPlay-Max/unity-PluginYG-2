@@ -1,11 +1,14 @@
-using UnityEngine;
-using UnityEditor;
-
 namespace YG.EditorScr
 {
+    using UnityEngine;
+    using UnityEditor;
+    using YG.EditorScr.BuildModify;
+
     [InitializeOnLoad]
     public static class YGEditorStyles
     {
+        private static double nextExecutionTime;
+
         private static GUIStyle _selectable;
         private static GUIStyle _box;
         private static GUIStyle _boxLight;
@@ -18,7 +21,7 @@ namespace YG.EditorScr
             get
             {
                 if (_selectable == null)
-                    Selectable();
+                    _selectable = Selectable();
                 return _selectable;
             }
         }
@@ -28,7 +31,7 @@ namespace YG.EditorScr
             get
             {
                 if (_box == null)
-                    Box();
+                    _box = Box();
                 return _box;
             }
         }
@@ -38,7 +41,7 @@ namespace YG.EditorScr
             get
             {
                 if (_boxLight == null)
-                    BoxLight();
+                    _boxLight = BoxLight();
                 return _boxLight;
             }
         }
@@ -48,7 +51,7 @@ namespace YG.EditorScr
             get
             {
                 if (_error == null)
-                    Error();
+                    _error = Error();
                 return _error;
             }
         }
@@ -58,7 +61,7 @@ namespace YG.EditorScr
             get
             {
                 if (_warning == null)
-                    Warning();
+                    _warning = Warning();
                 return _warning;
             }
         }
@@ -68,7 +71,7 @@ namespace YG.EditorScr
             get
             {
                 if (_button == null)
-                    Button();
+                    _button = Button();
                 return _button;
             }
         }
@@ -76,7 +79,8 @@ namespace YG.EditorScr
         static YGEditorStyles()
         {
             EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
-            EditorApplication.update += ReinitializeStyles;
+            EditorApplication.update += UpdateStyles;
+            ModifyBuild.onModifyComplete += ReinitializeStyles;
         }
 
         private static void OnPlayModeStateChanged(PlayModeStateChange state)
@@ -84,7 +88,7 @@ namespace YG.EditorScr
             ReinitializeStyles();
         }
 
-        private static void ReinitializeStyles()
+        public static void ReinitializeStyles()
         {
             _selectable = null;
             _box = null;
@@ -94,110 +98,136 @@ namespace YG.EditorScr
             _warning = null;
         }
 
-        private static void Selectable()
+        private static void UpdateStyles()
         {
-            _selectable = new GUIStyle(EditorStyles.helpBox);
+            if (EditorApplication.isPlaying && Time.unscaledTime < 10)
+            {
+                ReinitializeStyles();
+            }
+            else if (EditorApplication.timeSinceStartup >= nextExecutionTime)
+            {
+                nextExecutionTime = EditorApplication.timeSinceStartup + 3;
+                ReinitializeStyles();
+            }
+        }
+
+        public static GUIStyle Selectable()
+        {
+            GUIStyle style = new GUIStyle(EditorStyles.helpBox);
 
             Color normalColor = new Color(1f, 1f, 1f, 0.07f);
             Color hoverColor = new Color(1f, 0.5f, 0f, 0.3f);
 
-            _selectable.normal.background = MakeTexUnderlineLeft(normalColor);
-            _selectable.hover.background = MakeTexUnderlineLeft(hoverColor);
-            _selectable.active.background = MakeTexUnderlineLeft(hoverColor);
-            _selectable.focused.background = MakeTexUnderlineLeft(hoverColor);
+            style.normal.background = MakeTexUnderlineLeft(normalColor);
+            style.hover.background = MakeTexUnderlineLeft(hoverColor);
+            style.active.background = MakeTexUnderlineLeft(hoverColor);
+            style.focused.background = MakeTexUnderlineLeft(hoverColor);
+
+            return style;
         }
 
-        private static void Box()
+        public static GUIStyle Box()
         {
+            GUIStyle style;
             Color color;
 
             if (EditorGUIUtility.isProSkin)
             {
-                _box = new GUIStyle(EditorStyles.helpBox);
+                style = new GUIStyle(EditorStyles.helpBox);
                 color = new Color(0f, 0f, 0f, 0.2f);
             }
             else
             {
-                _box = new GUIStyle();
+                style = new GUIStyle();
                 color = new Color(1f, 1f, 1f, 0.5f);
             }
 
-            _box.normal.background = MakeTex(color);
-            _box.hover.background = MakeTex(color);
-            _box.active.background = MakeTex(color);
-            _box.focused.background = MakeTex(color);
+            style.normal.background = MakeTex(color);
+            style.hover.background = MakeTex(color);
+            style.active.background = MakeTex(color);
+            style.focused.background = MakeTex(color);
+
+            return style;
         }
 
-        private static void BoxLight()
+        public static GUIStyle BoxLight()
         {
+            GUIStyle style = new GUIStyle(EditorStyles.helpBox);
+
             if (EditorGUIUtility.isProSkin)
             {
-                _boxLight = new GUIStyle(EditorStyles.helpBox);
-
                 Color color = new Color(1f, 1f, 1f, 0.05f);
 
-                _boxLight.normal.background = MakeTex(color);
-                _boxLight.hover.background = MakeTex(color);
-                _boxLight.active.background = MakeTex(color);
-                _boxLight.focused.background = MakeTex(color);
+                style.normal.background = MakeTex(color);
+                style.hover.background = MakeTex(color);
+                style.active.background = MakeTex(color);
+                style.focused.background = MakeTex(color);
 
-                _boxLight.border = new RectOffset(23, 23, 23, 23);
+                style.border = new RectOffset(23, 23, 23, 23);
             }
             else
             {
-                _boxLight = new GUIStyle(EditorStyles.helpBox);
+                style = new GUIStyle(EditorStyles.helpBox);
             }
+
+            return style;
         }
 
-        private static void Error()
+        public static GUIStyle Error()
         {
-            _error = new GUIStyle(EditorStyles.helpBox);
-
+            GUIStyle style = new GUIStyle(EditorStyles.helpBox);
             Color color = new Color(1f, 0f, 0f, 0.18f);
 
-            _error.normal.background = MakeTex(color);
-            _error.hover.background = MakeTex(color);
-            _error.active.background = MakeTex(color);
-            _error.focused.background = MakeTex(color);
+            style.normal.background = MakeTex(color);
+            style.hover.background = MakeTex(color);
+            style.active.background = MakeTex(color);
+            style.focused.background = MakeTex(color);
+
+            return style;
         }
 
-        private static void Warning()
+        public static GUIStyle Warning()
         {
-            _warning = new GUIStyle(EditorStyles.helpBox);
-
+            GUIStyle style = new GUIStyle(EditorStyles.helpBox);
             Color color = new Color(1f, 0.6f, 0f, 0.25f);
 
-            _warning.normal.background = MakeTex(color);
-            _warning.hover.background = MakeTex(color);
-            _warning.active.background = MakeTex(color);
-            _warning.focused.background = MakeTex(color);
+            style.normal.background = MakeTex(color);
+            style.hover.background = MakeTex(color);
+            style.active.background = MakeTex(color);
+            style.focused.background = MakeTex(color);
+
+            return style;
         }
 
-        private static void Button()
+        public static GUIStyle Button()
         {
+            GUIStyle style = new GUIStyle(EditorStyles.helpBox);
+
             if (EditorGUIUtility.isProSkin)
             {
-                _button = new GUIStyle(EditorStyles.helpBox);
+                style = new GUIStyle(EditorStyles.helpBox);
 
                 Color hoverColor = new Color(1f, 0.5f, 0f, 0.5f);
 
-                _button.normal.background = MakeTexUnderline(new Color(1f, 1f, 1f, 0.2f));
-                _button.hover.background = MakeTexUnderline(hoverColor);
-                _button.active.background = MakeTexUnderline(new Color(1f, 0.5f, 0f, 1f));
-                _button.focused.background = MakeTexUnderline(hoverColor);
+                style.normal.background = MakeTexUnderline(new Color(1f, 1f, 1f, 0.2f));
+                style.hover.background = MakeTexUnderline(hoverColor);
+                style.active.background = MakeTexUnderline(new Color(1f, 0.5f, 0f, 1f));
+                style.focused.background = MakeTexUnderline(hoverColor);
 
-                _button.normal.textColor = Color.white;
-                _button.hover.textColor = Color.white;
-                _button.active.textColor = Color.white;
-                _button.focused.textColor = Color.white;
+                style.normal.textColor = Color.white;
+                style.hover.textColor = Color.white;
+                style.active.textColor = Color.white;
+                style.focused.textColor = Color.white;
 
-                _button.fontSize = 12;
-                _button.alignment = TextAnchor.MiddleCenter;
+                style.fontSize = 12;
+                style.alignment = TextAnchor.MiddleCenter;
             }
             else
             {
-                _button = new GUIStyle(GUI.skin.button);
+                style = new GUIStyle(GUI.skin.button);
             }
+
+            return style;
         }
 
         private static Texture2D MakeTex(Color col)

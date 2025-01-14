@@ -5,6 +5,14 @@ namespace YG
 {
     public static partial class YG2
     {
+        [InitYG]
+        private static void InitMetrica()
+        {
+#if !UNITY_EDITOR
+            iPlatform.InitMetrica();
+#endif
+        }
+
         /// <summary>
         /// Отправить событие в Метрику.
         /// </summary>
@@ -102,7 +110,7 @@ namespace YG
         {
             if (!infoYG.Metrica.log)
                 return;
-
+#if UNITY_EDITOR
             if (string.IsNullOrEmpty(eventParam) || eventParam == "{}")
             {
                 Message($"Metrica send: {eventName}");
@@ -111,6 +119,9 @@ namespace YG
             {
                 Message($"Metrica send: {eventName}; {eventParam}");
             }
+#else
+            Message($"Metrica send");
+#endif
         }
     }
 }

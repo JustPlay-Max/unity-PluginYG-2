@@ -35,6 +35,7 @@ function GetAllGames() {
 
             }).catch(err => {
                 console.error('Error getAllGames', err);
+                Final(NO_DATA);
             })
         } catch (e) {
             console.error('CRASH Get All Games: ', e.message);

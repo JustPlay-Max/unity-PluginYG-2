@@ -83,13 +83,16 @@ namespace YG
             public Gradient gradientBackgroundByAspectRatio;
 
             [Tooltip(Langs.t_pixelRatio)]
-            public bool pixelRatioEnable;
-            [NestedYG(nameof(pixelRatioEnable)), Min(0)]
-            public float pixelRatioValue = 1.3f;
-
-            [Tooltip(Langs.t_developerBuild)]
-            public bool developerBuild;
 #endif
+            public bool pixelRatioEnable;
+#if UNITY_EDITOR
+            [NestedYG(nameof(pixelRatioEnable)), Min(0)]
+#endif
+            public float pixelRatioValue = 1.3f;
+#if UNITY_EDITOR
+            [Tooltip(Langs.t_developerBuild)]
+#endif
+            public bool developerBuild;
         }
     }
 }

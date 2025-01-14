@@ -7,7 +7,7 @@ namespace YG
     public partial class YG2
     {
         public static Action onOpenRewardedAdv;
-        public static Action onCloseRewaededAdv;
+        public static Action onCloseRewardedAdv;
         public static Action<string> onRewardAdv;
         public static Action onErrorRewardedAdv;
 
@@ -17,7 +17,7 @@ namespace YG
         {
             // Reset static for ESC
             onOpenRewardedAdv = null;
-            onCloseRewaededAdv = null;
+            onCloseRewardedAdv = null;
             onRewardAdv = null;
             onErrorRewardedAdv = null;
         }
@@ -73,7 +73,7 @@ namespace YG.Insides
         {
             YG2.nowRewardAdv = false;
 
-            YG2.onCloseRewaededAdv?.Invoke();
+            YG2.onCloseRewardedAdv?.Invoke();
             YG2.onCloseAnyAdv?.Invoke();
             YG2.PauseGame(false);
 

@@ -4,6 +4,7 @@ using System.Reflection;
 using UnityEngine;
 using UnityEditor;
 using YG.Insides;
+using System.Linq;
 
 namespace YG.EditorScr
 {
@@ -13,9 +14,15 @@ namespace YG.EditorScr
         private PlatformSettings scr;
         private Texture2D iconPlatform;
 
+        private SerializedObject serializedScr;
+        private SerializedObject serializedInfoYG;
+
         private void OnEnable()
         {
             scr = (PlatformSettings)target;
+
+            serializedScr = new SerializedObject(scr);
+            serializedInfoYG = new SerializedObject(YG2.infoYG);
 
             string path = AssetDatabase.GetAssetPath(scr);
             if (string.IsNullOrEmpty(path))
@@ -30,7 +37,7 @@ namespace YG.EditorScr
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
 
-            string iconPath = $"{InfoYG.PATCH_PC_WEBGLTEMPLATES}/{modulName}/thumbnail.png";
+            string iconPath = GetIconCurrentPlatformPach(modulName);
 
             if (File.Exists(iconPath))
             {
@@ -40,9 +47,26 @@ namespace YG.EditorScr
             }
         }
 
+        public static string GetIconCurrentPlatformPach(string modulName)
+        {
+            string iconPath = Path.Combine(InfoYG.PATCH_PC_WEBGLTEMPLATES, modulName, "thumbnail.png");
+            if (File.Exists(iconPath))
+                return iconPath;
+
+            iconPath = Path.Combine(InfoYG.PATCH_PC_PLATFORMS, modulName, "Editor", "thumbnail.png");
+            if (File.Exists(iconPath))
+                return iconPath;
+
+            return null;
+        }
+
         public override void OnInspectorGUI()
         {
+            serializedScr.Update();
+            serializedInfoYG.Update();
+
             Undo.RecordObject(scr, "Platform Settings Change");
+            Undo.RecordObject(YG2.infoYG, "InfoYG Change");
 
             GUILayout.BeginHorizontal();
 
@@ -61,7 +85,7 @@ namespace YG.EditorScr
             if (!iconPlatform)
                 styleNamePlatform.alignment = TextAnchor.MiddleCenter;
 
-            EditorGUILayout.LabelField(new GUIContent(PlatformSettings.currentPlatformBaseName), styleNamePlatform);
+            EditorGUILayout.LabelField(new GUIContent(scr.NameBase()), styleNamePlatform);
 
             styleNamePlatform = TextStyles.LabelStyleColor(Color.gray);
             styleNamePlatform.fontSize = 12;
@@ -77,7 +101,19 @@ namespace YG.EditorScr
 
             GUILayout.Space(20);
 
-            EditorGUILayout.LabelField(Langs.projectSettings, TextStyles.Header());
+            if (YG2.infoYG.platformInfo.GetType().GetFields(BindingFlags.Public | BindingFlags.Instance)
+                .Any(field =>
+                {
+                    var attribute = field.GetCustomAttribute<PlatformAttribute>();
+                    return attribute != null && attribute.name == scr.NameBase();
+                }))
+            {
+                EditorGUILayout.LabelField($"{Langs.platformInfo} {scr.NameBase()}", TextStyles.Header());
+                DisplayFieldsWithToggles(YG2.infoYG.platformInfo, scr.NameBase());
+                GUILayout.Space(20);
+            }
+
+            EditorGUILayout.LabelField($"{Langs.projectSettings} {scr.NameBase()}", TextStyles.Header());
             DisplayFieldsWithToggles(scr.projectSettings);
 
             if (YG2.infoYG.common.GetType().GetFields(BindingFlags.Public | BindingFlags.Instance).Length > 0)
@@ -91,13 +127,20 @@ namespace YG.EditorScr
             if (FastButton.Stringy(Langs.applySettingsProject))
                 scr.ApplyProjectSettings();
 
+            serializedScr.ApplyModifiedProperties();
+            serializedInfoYG.ApplyModifiedProperties();
+
             if (GUI.changed)
+            {
                 EditorUtility.SetDirty(scr);
+                EditorUtility.SetDirty(YG2.infoYG);
+                AssetDatabase.SaveAssets();
+            }
 
             Repaint();
         }
 
-        private void DisplayFieldsWithToggles(object scrObject)
+        private void DisplayFieldsWithToggles(object scrObject, string checkPlatform = null)
         {
             FieldInfo[] fields = scrObject.GetType().GetFields(BindingFlags.Public | BindingFlags.Instance);
             object toggleScrObject = YG2.infoYG.platformToggles;
@@ -105,6 +148,15 @@ namespace YG.EditorScr
 
             foreach (FieldInfo field in fields)
             {
+                if (checkPlatform != null)
+                {
+                    var platformAttribute = field.GetCustomAttribute<PlatformAttribute>();
+                    if (platformAttribute == null || platformAttribute.name != checkPlatform)
+                    {
+                        continue;
+                    }
+                }
+
                 bool isToggle = false;
 
                 for (int i = 0; i < toggleFields.Length; i++)
@@ -115,9 +167,16 @@ namespace YG.EditorScr
                     {
                         EditorGUILayout.BeginHorizontal(YGEditorStyles.selectable);
 
+                        Undo.RecordObject(YG2.infoYG, "Change PlatformToggles");
+
                         bool toggleValue = (bool)toggle.GetValue(toggleScrObject);
                         bool newToggleValue = EditorGUILayout.Toggle(toggleValue, GUILayout.Width(20));
-                        toggle.SetValue(toggleScrObject, newToggleValue);
+
+                        if (newToggleValue != toggleValue)
+                        {
+                            toggle.SetValue(toggleScrObject, newToggleValue);
+                            EditorUtility.SetDirty(YG2.infoYG);
+                        }
 
                         EditorGUI.BeginDisabledGroup(!newToggleValue);
                         EditorGUILayout.LabelField(ObjectNames.NicifyVariableName(field.Name), GUILayout.Width(180));
@@ -174,6 +233,5 @@ namespace YG.EditorScr
                 EditorGUILayout.LabelField(field.Name, $"Unsupported field type: {field.FieldType}");
             }
         }
-
     }
 }

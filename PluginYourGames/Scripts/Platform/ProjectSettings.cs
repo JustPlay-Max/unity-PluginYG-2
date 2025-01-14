@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 
@@ -14,6 +15,7 @@ namespace YG.Insides
         public WebGLCompressionFormat compressionFormat = WebGLCompressionFormat.Brotli;
         public bool decompressionFallback;
         public bool autoGraphicsAPI = true;
+        public bool minimalCodeCompression = true;
         public bool dataCaching = true;
         public ColorSpace colorSpace = ColorSpace.Gamma;
         public bool archivingBuild = true;
@@ -42,6 +44,9 @@ namespace YG.Insides
                     PlayerSettings.SetUseDefaultGraphicsAPIs(EditorUserBuildSettings.activeBuildTarget, autoGraphicsAPI);
             }
 
+            if (toggles.minimalCodeCompression)
+                SafeSetManagedStrippingLevel();
+
             if (toggles.dataCaching)
                 PlayerSettings.WebGL.dataCaching = dataCaching;
 
@@ -56,6 +61,28 @@ namespace YG.Insides
 
             CallAction.CallIByAttribute(typeof(ApplySettingsAttribute), GetType(), this);
             AssetDatabase.SaveAssets();
+        }
+
+        private static void SafeSetManagedStrippingLevel()
+        {
+            BuildTargetGroup targetGroup = EditorUserBuildSettings.selectedBuildTargetGroup;
+
+            if (targetGroup == BuildTargetGroup.Unknown)
+                return;
+
+            var managedStrippingLevelEnum = typeof(PlayerSettings).Assembly.GetType("UnityEditor.ManagedStrippingLevel");
+            var minimalLevelValue = Enum.Parse(managedStrippingLevelEnum, "Minimal");
+
+            MethodInfo setStrippingLevelMethod = typeof(PlayerSettings).GetMethod(
+                "SetManagedStrippingLevel",
+                BindingFlags.Public | BindingFlags.Static,
+                null,
+                new Type[] { typeof(BuildTargetGroup), managedStrippingLevelEnum },
+                null
+            );
+
+            if (setStrippingLevelMethod != null)
+                setStrippingLevelMethod.Invoke(null, new object[] { targetGroup, minimalLevelValue });
         }
 #endif
     }

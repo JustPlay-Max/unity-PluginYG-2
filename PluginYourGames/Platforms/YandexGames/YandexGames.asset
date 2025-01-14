@@ -17,6 +17,8 @@ MonoBehaviour:
     showFirstAdv: 1
     interAdvInterval: 60
     postponeCallByFail: 0
+    useYandexMetrica: 1
+    metricaCounterID: 99005242
     skipInterAdvAfterReward: 0
     selectWebGLTemplate: 1
     runInBackground: 0
@@ -24,6 +26,7 @@ MonoBehaviour:
     compressionFormat: 0
     decompressionFallback: 0
     autoGraphicsAPI: 1
+    minimalCodeCompression: 1
     dataCaching: 1
     colorSpace: 0
     archivingBuild: 1

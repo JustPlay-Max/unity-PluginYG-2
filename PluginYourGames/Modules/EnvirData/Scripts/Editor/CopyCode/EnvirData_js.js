@@ -7,7 +7,7 @@ function RequestingEnvironmentData() {
             return;
         }
         try {
-            var browser = navigator.userAgent;
+            var browser = 'Other';
             if (browser.includes('YaBrowser') || browser.includes('YaSearchBrowser'))
                 browser = 'Yandex';
             else if (browser.includes('Opera') || browser.includes('OPR'))
@@ -22,8 +22,6 @@ function RequestingEnvironmentData() {
                 browser = 'Chrome';
             else if (browser.includes('Safari'))
                 browser = 'Safari';
-            else
-                browser = 'Other';
 
             let jsonEnvir = {
                 "language": ysdk.environment.i18n.lang,

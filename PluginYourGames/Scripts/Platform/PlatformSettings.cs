@@ -12,9 +12,7 @@ namespace YG.Insides
             get
             {
                 if (InfoYG.instance && InfoYG.instance.Basic.platform)
-                {
                     return InfoYG.instance.Basic.platform.nameFull;
-                }
                 return "NullPlatform";
             }
         }
@@ -23,19 +21,24 @@ namespace YG.Insides
             get
             {
                 if (InfoYG.instance && InfoYG.instance.Basic.platform)
-                {
                     return InfoYG.instance.Basic.platform.nameFull.Replace("Platform", string.Empty);
-                }
                 return "Null";
             }
         }
 
         public ProjectSettings projectSettings = new ProjectSettings();
+
+        public string NameBase()
+        {
+            return nameFull.Replace("Platform", string.Empty);
+        }
+
 #if UNITY_EDITOR
         public void ApplyProjectSettings()
         {
             projectSettings.ApplySettings();
 
+            CallAction.CallIByAttribute(typeof(ApplySettingsAttribute), typeof(PlatformInfo), YG2.infoYG.platformInfo);
             CallAction.CallIByAttribute(typeof(ApplySettingsAttribute), typeof(CommonOptions), YG2.infoYG.common);
 
             if (YG2.infoYG.platformToggles.selectWebGLTemplate && projectSettings.selectWebGLTemplate)
@@ -50,10 +53,12 @@ namespace YG.Insides
 
         public static void SelectPlatform()
         {
+            CallAction.CallIByAttribute(typeof(SelectPlatformAttribute), typeof(PlatformInfo), YG2.infoYG.platformInfo);
             CallAction.CallIByAttribute(typeof(SelectPlatformAttribute), typeof(CommonOptions), YG2.infoYG.common);
         }
         public static void DeletePlatform()
         {
+            CallAction.CallIByAttribute(typeof(DeletePlatformAttribute), typeof(PlatformInfo), YG2.infoYG.platformInfo);
             CallAction.CallIByAttribute(typeof(DeletePlatformAttribute), typeof(CommonOptions), YG2.infoYG.common);
         }
 #endif
