@@ -56,7 +56,7 @@ namespace YG.EditorScr
                     PlatformSettings platform = AssetDatabase.LoadAssetAtPath<PlatformSettings>(path);
                     if (platform != null)
                     {
-                        result.Add(PlatformSettings.currentPlatformBaseName);
+                        result.Add(platform.NameBase());
                     }
                 }
             }
